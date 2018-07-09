@@ -1,4 +1,5 @@
 package apartamento;
+import java.util.ArrayList;
 import java.util.List;
 
 import run.ConexaoBD;
@@ -15,7 +16,8 @@ public class ApartamentoDAOConcreto implements ApartamentoDAO {
     }
 
     public List<Apartamento> CarregarApartamentos() {
-        // TODO implement here
+        List<Apartamento> lista = new ArrayList<Apartamento>();
+        
         return null;
     }
     
