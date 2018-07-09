@@ -7,7 +7,7 @@ import java.util.*;
 public class ApartamentoSortVazios implements ApartamentoSortStrategy {
 
 	@Override
-	public List<Apartamento> Sort(List<Apartamento> apartamentos) {
+	public void Sort(List<Apartamento> apartamentos) {
 		apartamentos.sort(new Comparator<Apartamento>() {
 
 			@Override
@@ -19,8 +19,13 @@ public class ApartamentoSortVazios implements ApartamentoSortStrategy {
 					return 1;
 				}
 				else {
-					if(a1.getNumero() > a2.getNumero()) {
-						return -1;
+					if(a1.getAndar() > a2.getAndar()) {
+						if(a1.getNumero() > a2.getNumero()) {
+							return -1;
+						}
+						else {
+							return 1;
+						}
 					}
 					else {
 						return 1;
@@ -29,7 +34,6 @@ public class ApartamentoSortVazios implements ApartamentoSortStrategy {
 			}
 			
 		});
-		return apartamentos;
 	}
 
 }

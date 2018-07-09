@@ -29,7 +29,7 @@ public class MoradorFacade {
         return this.dao.SalvarMorador(m);
     }
     public boolean EditarMorador(int id, String nome, String cpf, String rg, char sexo, int idade, float renda) {
-        Morador m = new Morador(id, nome, cpf, rg, sexo, idade, renda, new ArrayList<Apartamento>());
+        Morador m = this.BuscarMorador(id);
         return this.dao.SalvarMorador(m);
     }
     public boolean ExcluirMorador(int id) {

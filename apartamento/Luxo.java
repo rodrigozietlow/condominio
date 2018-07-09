@@ -32,7 +32,23 @@ public class Luxo extends Apartamento {
     public Luxo(int id) {
     	super(id);
     }
-
     
-    
+	public String getLuminarias() {
+		return luminarias;
+	}
+	public void setLuminarias(String luminarias) {
+		this.luminarias = luminarias;
+	}
+	public boolean isGeladeira() {
+		return geladeira;
+	}
+	public void setGeladeira(boolean geladeira) {
+		this.geladeira = geladeira;
+	}
+	public boolean isFogao() {
+		return fogao;
+	}
+	public void setFogao(boolean fogao) {
+		this.fogao = fogao;
+	}
 }

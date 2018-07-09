@@ -13,6 +13,8 @@ public class ApartamentoDAOSortDecorator extends ApartamentoDAODecorator {
     }
 
     public List<Apartamento> CarregarApartamentos() {
-        return this.sortStrategy.Sort(this.apartamentoDAO.CarregarApartamentos());
+    	List<Apartamento> aps = this.apartamentoDAO.CarregarApartamentos(); 
+    	this.sortStrategy.Sort(aps);
+        return aps;
     }
 }
