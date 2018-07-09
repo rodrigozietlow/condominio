@@ -39,10 +39,6 @@ public class TesteStrategy {
 		
 		a4.getMoradores().add(m3);
 		
-		
-		List<Apartamento> l2;
-		List<Apartamento> l3;
-		
 		ApartamentoSortStrategy ss1 = new ApartamentoSortAndarNumero();
 		ApartamentoSortStrategy ss2 = new ApartamentoSortVazios();
 		
