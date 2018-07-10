@@ -9,8 +9,8 @@ import morador.Morador;
 public interface ApartamentoDAO {
 	
     List<Apartamento> CarregarApartamentos();
-    List<Apartamento> CarregarApartamentosMorador(Morador m);
     boolean SalvarApartamento(Apartamento a);
     boolean ExcluirApartamento(Apartamento a);
-    
+    boolean ExcluirAssociacaoMorador(Apartamento a, Morador m);
+    boolean AdicionarAssociacaoMorador(Apartamento a, Morador m);
 }

@@ -1,8 +1,6 @@
 package apartamento;
 import java.util.*;
 
-import morador.Morador;
-
 /**
  * 
  */

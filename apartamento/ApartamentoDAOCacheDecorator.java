@@ -52,4 +52,34 @@ public class ApartamentoDAOCacheDecorator extends ApartamentoDAODecorator {
         return this.apartamentoDAO.ExcluirApartamento(a);
     }
 
+	@Override
+	public boolean ExcluirAssociacaoMorador(Apartamento a, Morador m) {
+		if(cached) {
+			for (Apartamento apartamento : cacheApartamentos) {
+				if(apartamento.getId() == a.getId()) {
+					for (int i = 0; i < apartamento.getMoradores().size(); i++) {
+						Morador morador = apartamento.getMoradores().get(i);
+						if(morador.getId() == m.getId()) {
+							apartamento.getMoradores().remove(i);
+						}
+					}
+				}
+			}
+    	}
+		
+		return this.apartamentoDAO.ExcluirAssociacaoMorador(a, m);
+	}
+
+	@Override
+	public boolean AdicionarAssociacaoMorador(Apartamento a, Morador m) {
+		if(cached) {
+			for (Apartamento apartamento : cacheApartamentos) {
+				if(a.getId() == apartamento.getId()) {
+					apartamento.getMoradores().add(m);
+				}
+			}
+		}
+		return this.apartamentoDAO.AdicionarAssociacaoMorador(a, m);
+	}
+
 }
