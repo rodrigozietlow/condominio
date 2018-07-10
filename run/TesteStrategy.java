@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import apartamento.Apartamento;
+import apartamento.ApartamentoDAO;
+import apartamento.ApartamentoDAOConcreto;
 import apartamento.ApartamentoSortAndarNumero;
 import apartamento.ApartamentoSortStrategy;
 import apartamento.ApartamentoSortVazios;
@@ -15,6 +17,7 @@ import morador.Morador;
 public class TesteStrategy {
 
 	public static void main(String[] args) {
+		/*
 		List<Apartamento> l = new ArrayList<Apartamento>();
 		Edificio e = new Edificio(1);
 		Morador m1 = new Morador(1);
@@ -54,6 +57,17 @@ public class TesteStrategy {
 		ss2.Sort(l);
 		System.out.println("SortVazio");
 		for (Apartamento apartamento : l) {
+			System.out.println("AP "+apartamento.getAndar()+"-"+apartamento.getNumero()+" - "+apartamento.getClass()+" com "+apartamento.getMoradores().size());
+		}
+		*/
+		
+		ConexaoBD c = new ConexaoBD();
+		
+		ApartamentoDAO dao = new ApartamentoDAOConcreto(c);
+		
+		List<Apartamento> lista = dao.CarregarApartamentos();
+		
+		for (Apartamento apartamento : lista) {
 			System.out.println("AP "+apartamento.getAndar()+"-"+apartamento.getNumero()+" - "+apartamento.getClass()+" com "+apartamento.getMoradores().size());
 		}
 	}

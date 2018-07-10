@@ -13,6 +13,7 @@ import run.ConexaoBD;
  * 
  */
 public class MoradorDAOConcreto implements MoradorDAO {
+	
 	private ConexaoBD conexao;
 	
     public MoradorDAOConcreto(ConexaoBD c) {
