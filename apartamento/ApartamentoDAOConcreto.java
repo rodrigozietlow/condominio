@@ -2,6 +2,7 @@ package apartamento;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +71,9 @@ public class ApartamentoDAOConcreto implements ApartamentoDAO {
 					}
 				}
 				
+				// carregar o prédio daquele apartamento...
+				
+				
 			}
 			
 		} catch (SQLException e) {
@@ -80,13 +84,94 @@ public class ApartamentoDAOConcreto implements ApartamentoDAO {
     }
     
     public boolean SalvarApartamento(Apartamento a) {
-        // TODO implement here
-        return false;
+        boolean retorno = false;
+
+    	try {
+    		PreparedStatement stmt;
+    		PreparedStatement stmt2;
+    		
+	        if(a.getId() == 0) { // insert
+				stmt = this.conexao.getConexao().prepareStatement("INSERT INTO apartamento VALUES (NULL, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);	
+				stmt.setInt(1, a.getNumero());
+				stmt.setInt(2, a.getAndar());
+				stmt.setInt(3, (a.getClass() == Padrão.class) ? 1 : 2);
+				stmt.setInt(4, a.getEdificio().getId());
+				
+				if(stmt.executeUpdate() > 0) {
+	    			ResultSet rs = stmt.getGeneratedKeys();
+		    		if(rs.next()) {
+		    			a.setId(rs.getInt(1));
+		    			
+		    			if(a.getClass() == Padrão.class) {
+							stmt2 = this.conexao.getConexao().prepareStatement("INSERT INTO padrão VALUES (?, ?, ?)");
+							stmt2.setInt(1, a.getId());
+							stmt2.setString(2, ((Padrão) a).getTipoArmarios());
+							stmt2.setString(3, ((Padrão) a).getTipoPisos());
+						}
+						else {
+							stmt2 = this.conexao.getConexao().prepareStatement("INSERT INTO luxo VALUES (?, ?, ?, ?)");
+							stmt2.setInt(1, a.getId());
+							stmt2.setString(2, ((Luxo) a).getLuminarias());
+							stmt2.setBoolean(3, ((Luxo) a).isGeladeira());
+							stmt2.setBoolean(4, ((Luxo) a).isFogao());
+						}
+		    			
+		    			if(stmt2.executeUpdate() > 0) {
+		    				retorno = true;
+		    			}
+		    		}
+		    	}
+	        } else {
+	        	stmt = this.conexao.getConexao().prepareStatement("UPDATE apartamento SET numero=?, andar=?, tipo=? WHERE id=?");
+				stmt.setInt(1, a.getNumero());
+				stmt.setInt(2, a.getAndar());
+				stmt.setInt(3, (a.getClass() == Padrão.class) ? 1 : 2);
+				stmt.setInt(4, a.getId());
+				
+				if(stmt.executeUpdate() > 0) {		
+	    			if(a.getClass() == Padrão.class) {
+						stmt2 = this.conexao.getConexao().prepareStatement("UPDATE padrão SET tipoArmarios=?, tipoPisos=? WHERE idApartamento=?");
+						stmt2.setString(1, ((Padrão) a).getTipoArmarios());
+						stmt2.setString(2, ((Padrão) a).getTipoPisos());
+						stmt2.setInt(3, a.getId());
+					}
+					else {
+						stmt2 = this.conexao.getConexao().prepareStatement("UPDATE luxo SET luminarias=?, geladeira=?, fogao=? WHERE idApartamento=?");
+						stmt2.setString(1, ((Luxo) a).getLuminarias());
+						stmt2.setBoolean(2, ((Luxo) a).isGeladeira());
+						stmt2.setBoolean(3, ((Luxo) a).isFogao());
+						stmt2.setInt(4, a.getId());
+					}
+	    			
+	    			if(stmt2.executeUpdate() > 0) {
+	    				retorno = true;
+	    			}
+	    		}
+		    	
+	        }
+	        
+    	} catch (SQLException e) {
+			e.printStackTrace();
+		}
+        return retorno;
     }
 
     public boolean ExcluirApartamento(Apartamento a) {
-        // TODO implement here
-        return false;
+    	boolean retorno = false;
+        
+        try {
+			PreparedStatement stmt = this.conexao.getConexao().prepareStatement("DELETE FROM apartamento WHERE id = ?");
+			stmt.setInt(1, a.getId());
+			
+			if(stmt.executeUpdate() > 0) {
+				retorno = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+        
+        return retorno;
     }
 
 	@Override
@@ -110,7 +195,7 @@ public class ApartamentoDAOConcreto implements ApartamentoDAO {
 
 	@Override
 	public boolean AdicionarAssociacaoMorador(Apartamento a, Morador m) {
-boolean retorno = false;
+		boolean retorno = false;
 		
 		try {
 			PreparedStatement stmt = this.conexao.getConexao().prepareStatement("INSERT INTO morador_apartamento (idMorador, idApartamento, data) VALUES (?, ?, CURDATE())");

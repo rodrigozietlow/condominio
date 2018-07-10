@@ -24,4 +24,10 @@ public abstract class ApartamentoDAODecorator implements ApartamentoDAO {
         return this.apartamentoDAO.ExcluirApartamento(a);
     }
 
+    public boolean ExcluirAssociacaoMorador(Apartamento a, Morador m) {
+    	return this.apartamentoDAO.ExcluirAssociacaoMorador(a, m);
+    }
+    public boolean AdicionarAssociacaoMorador(Apartamento a, Morador m) {
+    	return this.apartamentoDAO.AdicionarAssociacaoMorador(a, m);
+    }
 }

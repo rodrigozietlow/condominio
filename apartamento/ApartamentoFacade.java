@@ -1,15 +1,18 @@
 package apartamento;
-import java.util.*;
+import java.util.List;
 
-/**
- * 
- */
+import morador.MoradorDAODecorator;
+import morador.MoradorFacade;
+import run.ConexaoBD;
+
 public class ApartamentoFacade {
-
-    /**
-     * Default constructor
-     */
-    public ApartamentoFacade() {
+	
+	private ApartamentoDAO dao;
+	
+    public ApartamentoFacade(ConexaoBD c, MoradorFacade mf) {
+    	this.dao = new ApartamentoDAOSortDecorator(
+    				new ApartamentoDAOCacheDecorator(
+    				 new ApartamentoDAOConcreto(c, mf.getDAO())));
     }
 
 

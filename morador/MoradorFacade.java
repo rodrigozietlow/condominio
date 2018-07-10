@@ -9,7 +9,6 @@ import run.ConexaoBD;
 public class MoradorFacade {
 	
 	private MoradorDAO dao;
-	private ApartamentoFacade apfa;
 	
     public MoradorFacade(ConexaoBD c) {
     	this.dao = new MoradorDAODecorator(new MoradorDAOConcreto(c));

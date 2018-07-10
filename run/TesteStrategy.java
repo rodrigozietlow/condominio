@@ -59,7 +59,6 @@ public class TesteStrategy {
 		for (Apartamento apartamento : l) {
 			System.out.println("AP "+apartamento.getAndar()+"-"+apartamento.getNumero()+" - "+apartamento.getClass()+" com "+apartamento.getMoradores().size());
 		}
-		*/
 		
 		ConexaoBD c = new ConexaoBD();
 		
@@ -70,6 +69,7 @@ public class TesteStrategy {
 		for (Apartamento apartamento : lista) {
 			System.out.println("AP "+apartamento.getAndar()+"-"+apartamento.getNumero()+" - "+apartamento.getClass()+" com "+apartamento.getMoradores().size());
 		}
+		*/
 	}
 
 }

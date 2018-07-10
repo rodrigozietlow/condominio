@@ -15,6 +15,10 @@ public class ApartamentoDAOSortDecorator extends ApartamentoDAODecorator {
     public List<Apartamento> CarregarApartamentos() {
     	List<Apartamento> aps = this.apartamentoDAO.CarregarApartamentos(); 
     	this.sortStrategy.Sort(aps);
-        return aps;
+        return aps; // isto é uma gambiarra
+    }
+    
+    public void setSortStrategy(ApartamentoSortStrategy strategy) {
+    	this.sortStrategy = strategy;
     }
 }
