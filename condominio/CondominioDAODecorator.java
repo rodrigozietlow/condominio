@@ -1,63 +1,50 @@
+package condominio;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.*;
 
-/**
- * 
- */
-public class CondominioDAODecorator extends CondominioDAO {
+public class CondominioDAODecorator implements CondominioDAO {
 
-    /**
-     * Default constructor
-     */
-    public CondominioDAODecorator() {
+    private CondominioDAO condominioDAO;
+    private List<Condominio> cache;
+    private boolean cached;
+    
+    public CondominioDAODecorator(CondominioDAO dao) {
+    	this.condominioDAO = dao;
+    	this.cache = new ArrayList<Condominio>();
     }
-
-    /**
-     * 
-     */
-    private CondominioDAO CondominioDAO;
-
-    /**
-     * @return
-     */
-    public Condominio CarregarCondominios() {
-        // TODO implement here
-        return null;
+    
+    public List<Condominio> CarregarCondominios() {
+    	
+    	if(!cached) {
+    		this.cache = this.condominioDAO.CarregarCondominios();
+    		cached = true;
+    	}
+    	
+        return this.cache;
     }
-
-    /**
-     * @param c 
-     * @return
-     */
+    
     public boolean SalvarCondominio(Condominio c) {
-        // TODO implement here
-        return false;
+    	// se já fizemos cache dos condominios e é uma inserção no banco, precisamos adicionar o objeto no nosso cache
+    	if(cached && m.getId() == 0) {
+    		this.cache.add(c);
+    	}
+        return this.condominioDAO.SalvarCondominio(c);
     }
 
-    /**
-     * @param c 
-     * @return
-     */
     public boolean ExcluirCondominio(Condominio c) {
-        // TODO implement here
-        return false;
+    	// se já fizemos cache dos condominios, precisamos remover a referencia do id dos objetos em cache
+    	if(cached) {
+    		for (int i = 0; i < cache.size(); i++) {
+				Condominio condominio = cache.get(i);
+				if(condominio.getId() == m.getId()) {
+					cache.remove(i);
+					break;
+				}
+			}
+    	}
+    	
+    	
+        return this.condominioDAO.ExcluirCondominio(c);
     }
-
-    /**
-     * @return
-     */
-    public abstract Condominio CarregarCondominios();
-
-    /**
-     * @param c 
-     * @return
-     */
-    public abstract boolean SalvarCondominio(Condominio c);
-
-    /**
-     * @param c 
-     * @return
-     */
-    public abstract boolean ExcluirCondominio(Condominio c);
-
 }

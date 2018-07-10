@@ -1,71 +1,38 @@
+package condominio;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.*;
+import run.ConexaoBD;
 
-/**
- * 
- */
 public class CondominioFacade {
-
-    /**
-     * Default constructor
-     */
-    public CondominioFacade() {
+	
+	private CondominioDAO dao;
+	
+    public CondominioFacade(ConexaoBD c) {
+    	this.dao = new CondominioDAODecorator(new CondominioDAOConcreto(c));
     }
-
-    /**
-     * 
-     */
-    private EdificioFacade EdificioFacade;
-
-    /**
-     * @return
-     */
-    public Condominio ListarCondominios() {
-        // TODO implement here
+    public List<Condominio> ListarCondominios() {
+        return this.dao.CarregarCondominios();
+    }
+    public Condominio BuscarCondominio(int id) {
+    	System.out.println("Buscando condominio de id "+id);
+        for (Condominio condominio: this.dao.CarregarCondominios() ) {
+			if(condominio.getId() == id) {
+				return condominio;
+			}
+		}
         return null;
     }
-
-    /**
-     * @param id 
-     * @return
-     */
-    public Condiminio BuscarCondominio(int id) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param nome 
-     * @param cidade 
-     * @param bairro 
-     * @param numero 
-     * @return
-     */
     public boolean CadastrarCondominio(String nome, String cidade, String bairro, String numero) {
-        // TODO implement here
-        return false;
+        Condominio c = new Condominio(nome, cidade, bairro, numero);
+        return this.dao.SalvarCondominio(c);
     }
-
-    /**
-     * @param id 
-     * @param nome 
-     * @param cidade 
-     * @param bairro 
-     * @param numero 
-     * @return
-     */
     public boolean EditarCondominio(int id, String nome, String cidade, String bairro, String numero) {
-        // TODO implement here
-        return false;
+        Condominio c = this.BuscarCondominio(id);
+        return this.dao.SalvarCondominio(c);
     }
-
-    /**
-     * @param id 
-     * @return
-     */
     public boolean ExcluirCondominio(int id) {
-        // TODO implement here
-        return false;
+        return this.dao.ExcluirCondominio(new Condominio(id));
     }
 
 }
