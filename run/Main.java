@@ -108,7 +108,7 @@ public class Main {
 				System.out.println("O cpf não possui 14 dígitos");
 			}
     	}
-    	// TODO: fazer, pois cansei
+    	// TODO: entradas válidas?
     	
     	while(true) {
     		System.out.println("Digite o rg do morador");

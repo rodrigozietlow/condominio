@@ -32,6 +32,12 @@ public class MoradorFacade {
     }
     public boolean EditarMorador(int id, String nome, String cpf, String rg, char sexo, int idade, float renda) {
         Morador m = this.BuscarMorador(id);
+        m.setNome(nome);
+        m.setCpf(cpf);
+        m.setRg(rg);
+        m.setSexo(sexo);
+        m.setIdade(idade);
+        m.setRenda(renda);
         return this.dao.SalvarMorador(m);
     }
     public boolean ExcluirMorador(int id) {
