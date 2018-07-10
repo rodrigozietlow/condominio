@@ -1,6 +1,8 @@
 package apartamento;
 import java.util.List;
 
+import morador.Morador;
+
 /**
  * 
  */
@@ -13,6 +15,10 @@ public abstract class ApartamentoDAODecorator implements ApartamentoDAO {
     }
 
     public abstract List<Apartamento> CarregarApartamentos();
+    
+    public List<Apartamento> CarregarApartamentosMorador(Morador m) {
+		return this.apartamentoDAO.CarregarApartamentosMorador(m);
+	}
 
     public boolean SalvarApartamento(Apartamento a) {
         return this.apartamentoDAO.SalvarApartamento(a);

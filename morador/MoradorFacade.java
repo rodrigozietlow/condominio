@@ -3,15 +3,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import apartamento.Apartamento;
+import apartamento.ApartamentoFacade;
 import run.ConexaoBD;
 
 public class MoradorFacade {
 	
 	private MoradorDAO dao;
+	private ApartamentoFacade apfa;
 	
     public MoradorFacade(ConexaoBD c) {
     	this.dao = new MoradorDAODecorator(new MoradorDAOConcreto(c));
     }
+    
     public List<Morador> ListarMoradores() {
         return this.dao.CarregarMoradores();
     }
@@ -34,6 +37,10 @@ public class MoradorFacade {
     }
     public boolean ExcluirMorador(int id) {
         return this.dao.ExcluirMorador(new Morador(id));
+    }
+    
+    public MoradorDAO getDAO() {
+    	return this.dao;
     }
 
 }
